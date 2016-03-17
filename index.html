@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://threejs.org/docs/scenes/geometry-browser.html#BoxGeometry -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Three.js Geometry Browser</title>
+		<style>
+
+
+			body {
+				margin:0;
+				font-family: 'inconsolata';
+				font-size: 15px;
+				line-height: 18px;
+				overflow: hidden;
+			}
+
+			canvas { width: 100%; height: 100% }
+
+			#newWindow {
+				display: block;
+				position: absolute;
+				bottom: 0.3em;
+				left: 0.5em;
+				color: #fff;
+			}
+		</style>
+	<style type="text/css">.dg ul{list-style:none;margin:0;padding:0;width:100%;clear:both}.dg.ac{position:fixed;top:0;left:0;right:0;height:0;z-index:0}.dg:not(.ac) .main{overflow:hidden}.dg.main{-webkit-transition:opacity 0.1s linear;-o-transition:opacity 0.1s linear;-moz-transition:opacity 0.1s linear;transition:opacity 0.1s linear}.dg.main.taller-than-window{overflow-y:auto}.dg.main.taller-than-window .close-button{opacity:1;margin-top:-1px;border-top:1px solid #2c2c2c}.dg.main ul.closed .close-button{opacity:1 !important}.dg.main:hover .close-button,.dg.main .close-button.drag{opacity:1}.dg.main .close-button{-webkit-transition:opacity 0.1s linear;-o-transition:opacity 0.1s linear;-moz-transition:opacity 0.1s linear;transition:opacity 0.1s linear;border:0;position:absolute;line-height:19px;height:20px;cursor:pointer;text-align:center;background-color:#000}.dg.main .close-button:hover{background-color:#111}.dg.a{float:right;margin-right:15px;overflow-x:hidden}.dg.a.has-save ul{margin-top:27px}.dg.a.has-save ul.closed{margin-top:0}.dg.a .save-row{position:fixed;top:0;z-index:1002}.dg li{-webkit-transition:height 0.1s ease-out;-o-transition:height 0.1s ease-out;-moz-transition:height 0.1s ease-out;transition:height 0.1s ease-out}.dg li:not(.folder){cursor:auto;height:27px;line-height:27px;overflow:hidden;padding:0 4px 0 5px}.dg li.folder{padding:0;border-left:4px solid rgba(0,0,0,0)}.dg li.title{cursor:pointer;margin-left:-4px}.dg .closed li:not(.title),.dg .closed ul li,.dg .closed ul li > *{height:0;overflow:hidden;border:0}.dg .cr{clear:both;padding-left:3px;height:27px}.dg .property-name{cursor:default;float:left;clear:left;width:40%;overflow:hidden;text-overflow:ellipsis}.dg .c{float:left;width:60%}.dg .c input[type=text]{border:0;margin-top:4px;padding:3px;width:100%;float:right}.dg .has-slider input[type=text]{width:30%;margin-left:0}.dg .slider{float:left;width:66%;margin-left:-5px;margin-right:0;height:19px;margin-top:4px}.dg .slider-fg{height:100%}.dg .c input[type=checkbox]{margin-top:9px}.dg .c select{margin-top:5px}.dg .cr.function,.dg .cr.function .property-name,.dg .cr.function *,.dg .cr.boolean,.dg .cr.boolean *{cursor:pointer}.dg .selector{display:none;position:absolute;margin-left:-9px;margin-top:23px;z-index:10}.dg .c:hover .selector,.dg .selector.drag{display:block}.dg li.save-row{padding:0}.dg li.save-row .button{display:inline-block;padding:0px 6px}.dg.dialogue{background-color:#222;width:460px;padding:15px;font-size:13px;line-height:15px}#dg-new-constructor{padding:10px;color:#222;font-family:Monaco, monospace;font-size:10px;border:0;resize:none;box-shadow:inset 1px 1px 1px #888;word-wrap:break-word;margin:12px 0;display:block;width:440px;overflow-y:scroll;height:100px;position:relative}#dg-local-explain{display:none;font-size:11px;line-height:17px;border-radius:3px;background-color:#333;padding:8px;margin-top:10px}#dg-local-explain code{font-size:10px}#dat-gui-save-locally{display:none}.dg{color:#eee;font:11px 'Lucida Grande', sans-serif;text-shadow:0 -1px 0 #111}.dg.main::-webkit-scrollbar{width:5px;background:#1a1a1a}.dg.main::-webkit-scrollbar-corner{height:0;display:none}.dg.main::-webkit-scrollbar-thumb{border-radius:5px;background:#676767}.dg li:not(.folder){background:#1a1a1a;border-bottom:1px solid #2c2c2c}.dg li.save-row{line-height:25px;background:#dad5cb;border:0}.dg li.save-row select{margin-left:5px;width:108px}.dg li.save-row .button{margin-left:5px;margin-top:1px;border-radius:2px;font-size:9px;line-height:7px;padding:4px 4px 5px 4px;background:#c5bdad;color:#fff;text-shadow:0 1px 0 #b0a58f;box-shadow:0 -1px 0 #b0a58f;cursor:pointer}.dg li.save-row .button.gears{background:#c5bdad url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAANCAYAAAB/9ZQ7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAQJJREFUeNpiYKAU/P//PwGIC/ApCABiBSAW+I8AClAcgKxQ4T9hoMAEUrxx2QSGN6+egDX+/vWT4e7N82AMYoPAx/evwWoYoSYbACX2s7KxCxzcsezDh3evFoDEBYTEEqycggWAzA9AuUSQQgeYPa9fPv6/YWm/Acx5IPb7ty/fw+QZblw67vDs8R0YHyQhgObx+yAJkBqmG5dPPDh1aPOGR/eugW0G4vlIoTIfyFcA+QekhhHJhPdQxbiAIguMBTQZrPD7108M6roWYDFQiIAAv6Aow/1bFwXgis+f2LUAynwoIaNcz8XNx3Dl7MEJUDGQpx9gtQ8YCueB+D26OECAAQDadt7e46D42QAAAABJRU5ErkJggg==) 2px 1px no-repeat;height:7px;width:8px}.dg li.save-row .button:hover{background-color:#bab19e;box-shadow:0 -1px 0 #b0a58f}.dg li.folder{border-bottom:0}.dg li.title{padding-left:16px;background:#000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) 6px 10px no-repeat;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.2)}.dg .closed li.title{background-image:url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==)}.dg .cr.boolean{border-left:3px solid #806787}.dg .cr.function{border-left:3px solid #e61d5f}.dg .cr.number{border-left:3px solid #2fa1d6}.dg .cr.number input[type=text]{color:#2fa1d6}.dg .cr.string{border-left:3px solid #1ed36f}.dg .cr.string input[type=text]{color:#1ed36f}.dg .cr.function:hover,.dg .cr.boolean:hover{background:#111}.dg .c input[type=text]{background:#303030;outline:none}.dg .c input[type=text]:hover{background:#3c3c3c}.dg .c input[type=text]:focus{background:#494949;color:#fff}.dg .c .slider{background:#303030;cursor:ew-resize}.dg .c .slider-fg{background:#2fa1d6}.dg .c .slider:hover{background:#3c3c3c}.dg .c .slider:hover .slider-fg{background:#44abda}
+</style></head>
+	<body>
+		<script src="./files/three.min.js"></script>
+		<script src="./files/dat.gui.min.js"></script>
+		<script src="./files/OrbitControls.js"></script>
+		<script src="./files/TextGeometry.js"></script>
+		<script src="./files/FontUtils.js"></script>
+		<script src="./files/gentilis_bold.typeface.js"></script>
+		<script src="./files/gentilis_regular.typeface.js"></script>
+		<script src="./files/optimer_bold.typeface.js"></script>
+		<script src="./files/optimer_regular.typeface.js"></script>
+		<script src="./files/helvetiker_bold.typeface.js"></script>
+		<script src="./files/helvetiker_regular.typeface.js"></script>
+		<script src="./files/droid_serif_regular.typeface.js"></script>
+		<script src="./files/droid_serif_bold.typeface.js"></script>
+
+		<script src="./files/geometry.js"></script>
+
+		<script src="socket.io.js"></script>
+
+		<script>
+
+			//document.getElementById('newWindow').href += window.location.hash;
+
+			var gui = new dat.GUI();
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 50 );
+			camera.position.z = 30;
+
+			var renderer = new THREE.WebGLRenderer({antialias: true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var orbit = new THREE.OrbitControls( camera, renderer.domElement );
+			orbit.enableZoom = true;
+
+			var ambientLight = new THREE.AmbientLight( 0x000000 );
+			scene.add( ambientLight );
+
+			var lights = [];
+			lights[0] = new THREE.PointLight( 0xffffff, 1, 0 );
+			lights[1] = new THREE.PointLight( 0xffffff, 1, 0 );
+			lights[2] = new THREE.PointLight( 0xffffff, 1, 0 );
+
+			lights[0].position.set( 0, 200, 0 );
+			lights[1].position.set( 100, 200, 100 );
+			lights[2].position.set( -100, -200, -100 );
+
+			scene.add( lights[0] );
+			scene.add( lights[1] );
+			scene.add( lights[2] );
+
+			var geometry = new THREE.PlaneGeometry( 50, 50, 50 );
+
+			geometry.translate(0,0,0);
+			geometry.rotateX(Math.PI/2);
+
+
+			var material = new THREE.MeshBasicMaterial( {color: 0x0066ff, side: THREE.DoubleSide, opacity: 0.25, transparent: true } );
+			var plane = new THREE.Mesh( geometry, material );
+			scene.add( plane );
+
+
+			manage('mag', 0, new THREE.Vector3( -10, 0, 0 ), 10, .01);
+			manage('mag', 1, new THREE.Vector3( 10, 0, 0 ), 10, .01);
+			manage('mag', 2, new THREE.Vector3( 0, 0, 10 ), 10, .01);
+
+			function manage(topic, magIndex, origin, base, scale)
+			{
+				var materialX = new THREE.LineBasicMaterial({
+					color: 0xff0000,
+					linewidth: 5,
+				});
+
+				var geometryX = new THREE.Geometry();
+				geometryX.vertices.push(
+					origin,
+					new THREE.Vector3( origin.x+base, origin.y, origin.z )
+				);
+
+				var lineX = new THREE.Line( geometryX, materialX );
+				scene.add( lineX );
+
+				var materialY = new THREE.LineBasicMaterial({
+					color: 0x0000ff,
+					linewidth: 5,
+				});
+
+				var geometryY = new THREE.Geometry();
+				geometryY.vertices.push(
+					origin,
+					new THREE.Vector3( origin.x, origin.y+base, origin.z )
+				);
+
+				var lineY = new THREE.Line( geometryY, materialY );
+				scene.add( lineY );
+
+				var materialZ = new THREE.LineBasicMaterial({
+					color: 0x006600,
+					linewidth: 5,
+				});
+
+				var geometryZ = new THREE.Geometry();
+				geometryZ.vertices.push(
+					origin,
+					new THREE.Vector3( origin.x, origin.y, origin.z+base )
+				);
+
+				var lineZ = new THREE.Line( geometryZ, materialZ );
+				scene.add( lineZ );
+
+				var materialR = new THREE.LineBasicMaterial({
+					color: 0xffffff,
+					linewidth: 5,
+				});
+
+				var geometryR = new THREE.Geometry();
+				geometryR.vertices.push(
+					origin,
+					new THREE.Vector3( 0, 0, 0 )
+				);
+
+				var lineR = new THREE.Line( geometryR, materialR );
+				scene.add( lineR );
+
+
+				var geometryP = new THREE.BufferGeometry();
+				var numPoints = 10000;
+				var index = 0;
+				var positions = new Float32Array( numPoints * 3 );
+				// positions[0] = 10;
+				// positions[1] = 10;
+				// positions[2] = 10;
+
+				geometryP.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+				geometryP.computeBoundingSphere();
+
+
+				var materialP = new THREE.PointsMaterial( { size: 0.1 } );
+
+				var particleSystem = new THREE.Points( geometryP, materialP );
+				scene.add( particleSystem );
+
+				positions = particleSystem.geometry.attributes.position.array;
+
+				  var socket = io('http://localhost:4000');
+				  socket.on(topic, function (msg) {
+
+					if(msg.index !== magIndex)
+					{
+						return;
+					}
+				     console.log(msg.data);
+					geometryX.vertices[1].x = Number.parseFloat(msg.data.x)*scale + origin.x;
+					geometryX.verticesNeedUpdate = true;
+
+					geometryY.vertices[1].y = Number.parseFloat(msg.data.y)*scale + origin.y;
+					geometryY.verticesNeedUpdate = true;
+
+					geometryZ.vertices[1].z = Number.parseFloat(msg.data.z)*scale + origin.z;
+					geometryZ.verticesNeedUpdate = true;
+
+					geometryR.vertices[1].x = Number.parseFloat(msg.data.x)*scale + origin.x;
+					geometryR.vertices[1].y = Number.parseFloat(msg.data.y)*scale + origin.y;
+					geometryR.vertices[1].z = Number.parseFloat(msg.data.z)*scale + origin.z;
+					geometryR.verticesNeedUpdate = true;
+
+					positions[index++] = Number.parseFloat(msg.data.x)*scale + origin.x;
+					positions[index++] = Number.parseFloat(msg.data.y)*scale + origin.y;
+					positions[index++] = Number.parseFloat(msg.data.z)*scale + origin.z;
+					// geometryP.attributes.position.setXYZ( 0, msg.data.x, msg.data.y, msg.data.z );
+					particleSystem.geometry.attributes.position.needsUpdate = true;
+
+
+				    // msg.data.forEach(function(val){
+				    // 	console.log(val);
+				    // });
+				    //socket.emit('my other event', { my: 'data' });
+				  });
+			};
+
+			// var mesh = new THREE.Object3D()
+
+			// mesh.add( new THREE.LineSegments(
+
+			// 	new THREE.Geometry(),
+
+			// 	new THREE.LineBasicMaterial({
+			// 		color: 0xffffff,
+			// 		transparent: true,
+			// 		opacity: 0.5
+			// 	})
+
+			// ));
+
+			// mesh.add( new THREE.Mesh(
+
+			// 	new THREE.Geometry(),
+
+			// 	new THREE.MeshPhongMaterial({
+			// 		color: 0x156289,
+			// 		emissive: 0x072534,
+			// 		side: THREE.DoubleSide,
+			// 		shading: THREE.FlatShading
+			// 	})
+
+			// ));
+
+			// var options = chooseFromHash( mesh );
+
+			// scene.add( mesh );
+
+			var prevFog = false;
+
+			var render = function () {
+
+				requestAnimationFrame( render );
+
+				var time = Date.now() * 0.001;
+
+				// if( !options.fixed ) {
+				// 	mesh.rotation.x += 0.005;
+				// 	mesh.rotation.y += 0.005;
+				// }
+
+				renderer.render( scene, camera );
+
+			};
+
+			window.addEventListener( 'resize', function () {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}, false );
+
+			render();
+
+		</script>
+		<div class="dg ac">
+			<div class="dg main a" style="width: 245px;">
+				<div style="width: 6px; margin-left: -3px; height: 196px; cursor: ew-resize; position: absolute;"></div>
+				<ul style="height: auto;">
+					<li class="folder">
+						<div class="dg">
+							<ul>
+								<li class="title">THREE.BoxGeometry</li>
+								<li class="cr number has-slider">
+									<div>
+										<span class="property-name">width</span>
+										<div class="c"><div>
+											<input type="text">
+										</div>
+										<div class="slider">
+											<div class="slider-fg" style="width: 48.2759%;">
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="cr number has-slider">
+								<div>
+									<span class="property-name">height</span>
+									<div class="c">
+										<div>
+											<input type="text">
+										</div>
+										<div class="slider">
+											<div class="slider-fg" style="width: 48.2759%;"></div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="cr number has-slider">
+								<div>
+									<span class="property-name">depth</span>
+									<div class="c">
+										<div>
+											<input type="text">
+										</div>
+										<div class="slider">
+											<div class="slider-fg" style="width: 48.2759%;"></div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="cr number has-slider">
+								<div>
+									<span class="property-name">widthSegments</span>
+									<div class="c">
+										<div>
+											<input type="text">
+										</div>
+										<div class="slider">
+											<div class="slider-fg" style="width: 0%;"></div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="cr number has-slider">
+								<div>
+									<span class="property-name">heightSegments</span>
+									<div class="c">
+										<div>
+											<input type="text">
+										</div>
+										<div class="slider">
+											<div class="slider-fg" style="width: 0%;"></div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="cr number has-slider">
+								<div>
+									<span class="property-name">depthSegments</span>
+									<div class="c">
+										<div><input type="text"></div>
+										<div class="slider">
+											<div class="slider-fg" style="width: 0%;"></div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			<div class="close-button" style="width: 245px;">Close Controls</div>
+		</div>
+	</div>
+	<canvas width="1516" height="485" style="width: 1516px; height: 485px;"></canvas>
+
+
+</body></html>

@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "serialport": "2.0.6",
+    "express": "4.13.4",
+    "socket.io": "1.4.5"
+  },
+  "description": "",
+  "name": "hmc5883-viz",
+  "optionalDependencies": {},
+  "scripts": {
+    "test": "make test"
+  },
+  "version": "0.0.1"
+}
